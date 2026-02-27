@@ -1,0 +1,1228 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>KK Car Modif — Premium Car Modification Garage</title>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Rajdhani:wght@400;500;600;700&family=Exo+2:wght@300;400;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --black: #080808;
+    --deep: #0d0d0d;
+    --card: #141414;
+    --border: #222;
+    --red: #f5c400;
+    --red2: #ffd700;
+    --orange: #ffaa00;
+    --gold: #ffd700;
+    --white: #f0f0f0;
+    --muted: #888;
+    --font-display: 'Bebas Neue', sans-serif;
+    --font-body: 'Rajdhani', sans-serif;
+    --font-light: 'Exo 2', sans-serif;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--black);
+    color: var(--white);
+    font-family: var(--font-body);
+    overflow-x: hidden;
+    cursor: none;
+  }
+
+  /* CUSTOM CURSOR */
+  .cursor {
+    position: fixed; width: 12px; height: 12px;
+    background: var(--red); border-radius: 50%;
+    pointer-events: none; z-index: 99999;
+    transition: transform 0.1s; mix-blend-mode: difference;
+  }
+  .cursor-ring {
+    position: fixed; width: 36px; height: 36px;
+    border: 1px solid var(--red); border-radius: 50%;
+    pointer-events: none; z-index: 99998;
+    transition: all 0.2s cubic-bezier(.25,.46,.45,.94);
+    opacity: 0.6;
+  }
+
+  /* NAV */
+  nav {
+    position: fixed; top: 0; width: 100%;
+    background: rgba(8,8,8,0.92);
+    backdrop-filter: blur(20px);
+    border-bottom: 1px solid #1a1a1a;
+    z-index: 1000; padding: 0 3rem;
+    display: flex; align-items: center; justify-content: space-between;
+    height: 70px;
+  }
+  .logo {
+    font-family: var(--font-display);
+    font-size: 2rem; letter-spacing: 4px;
+    background: linear-gradient(135deg, var(--red), var(--orange));
+    -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+  }
+  .logo span { color: var(--white); -webkit-text-fill-color: var(--white); }
+  .nav-links { display: flex; gap: 2.5rem; list-style: none; }
+  .nav-links a {
+    color: var(--muted); text-decoration: none;
+    font-size: 0.85rem; letter-spacing: 3px; text-transform: uppercase;
+    font-weight: 600; transition: color 0.3s;
+    position: relative;
+  }
+  .nav-links a::after {
+    content: ''; position: absolute; bottom: -4px; left: 0;
+    width: 0; height: 1px; background: var(--red);
+    transition: width 0.3s;
+  }
+  .nav-links a:hover { color: var(--white); }
+  .nav-links a:hover::after { width: 100%; }
+  .nav-cta {
+    background: var(--red); color: #fff;
+    border: none; padding: 0.6rem 1.8rem;
+    font-family: var(--font-body); font-size: 0.8rem;
+    letter-spacing: 3px; text-transform: uppercase; font-weight: 700;
+    cursor: pointer; transition: all 0.3s; text-decoration: none;
+    clip-path: polygon(8px 0, 100% 0, calc(100% - 8px) 100%, 0 100%);
+  }
+  .nav-cta:hover { background: var(--red2); transform: translateY(-1px); }
+
+  /* HAMBURGER */
+  .hamburger { display: none; flex-direction: column; gap: 5px; cursor: pointer; }
+  .hamburger span { width: 26px; height: 2px; background: var(--white); transition: 0.3s; }
+
+  /* HERO */
+  .hero {
+    min-height: 100vh; position: relative;
+    display: flex; align-items: center; justify-content: center;
+    overflow: hidden;
+  }
+  .hero-bg {
+    position: absolute; inset: 0;
+    background: 
+      radial-gradient(ellipse at 20% 50%, rgba(245,196,0,0.15) 0%, transparent 60%),
+      radial-gradient(ellipse at 80% 20%, rgba(255,170,0,0.1) 0%, transparent 50%),
+      linear-gradient(180deg, #080808 0%, #0d0a00 100%);
+  }
+  .hero-grid {
+    position: absolute; inset: 0;
+    background-image: 
+      linear-gradient(rgba(245,196,0,0.06) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(245,196,0,0.06) 1px, transparent 1px);
+    background-size: 60px 60px;
+    animation: gridMove 20s linear infinite;
+  }
+  @keyframes gridMove {
+    0% { transform: perspective(500px) rotateX(30deg) translateY(0); }
+    100% { transform: perspective(500px) rotateX(30deg) translateY(60px); }
+  }
+  .hero-content {
+    position: relative; text-align: center; z-index: 2;
+    padding: 0 2rem;
+  }
+  .hero-tag {
+    display: inline-block;
+    border: 1px solid var(--red); color: var(--red);
+    padding: 0.4rem 1.5rem; font-size: 0.75rem;
+    letter-spacing: 5px; text-transform: uppercase;
+    margin-bottom: 2rem; animation: fadeDown 0.8s ease both;
+  }
+  .hero-title {
+    font-family: var(--font-display);
+    font-size: clamp(5rem, 15vw, 14rem);
+    line-height: 0.85; letter-spacing: -2px;
+    animation: fadeUp 0.8s ease 0.2s both;
+  }
+  .hero-title .kk {
+    background: linear-gradient(135deg, var(--red), var(--orange));
+    -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+    display: block;
+  }
+  .hero-title .sub { font-size: clamp(2rem, 5vw, 5rem); color: var(--muted); letter-spacing: 8px; }
+  .hero-desc {
+    margin: 2rem auto 3rem; max-width: 500px;
+    color: var(--muted); font-family: var(--font-light);
+    font-size: 1rem; line-height: 1.7; font-weight: 300;
+    animation: fadeUp 0.8s ease 0.4s both;
+  }
+  .hero-btns {
+    display: flex; gap: 1.5rem; justify-content: center; flex-wrap: wrap;
+    animation: fadeUp 0.8s ease 0.6s both;
+  }
+  .btn-primary {
+    background: linear-gradient(135deg, var(--red), var(--orange));
+    color: #fff; border: none; padding: 1rem 3rem;
+    font-family: var(--font-body); font-size: 0.85rem;
+    letter-spacing: 3px; text-transform: uppercase; font-weight: 700;
+    cursor: pointer; text-decoration: none;
+    clip-path: polygon(12px 0, 100% 0, calc(100% - 12px) 100%, 0 100%);
+    transition: all 0.3s; display: inline-block;
+  }
+  .btn-primary:hover { transform: translateY(-3px); box-shadow: 0 15px 40px rgba(232,0,28,0.4); }
+  .btn-outline {
+    background: transparent; color: var(--white);
+    border: 1px solid #333; padding: 1rem 3rem;
+    font-family: var(--font-body); font-size: 0.85rem;
+    letter-spacing: 3px; text-transform: uppercase; font-weight: 700;
+    cursor: pointer; text-decoration: none;
+    clip-path: polygon(12px 0, 100% 0, calc(100% - 12px) 100%, 0 100%);
+    transition: all 0.3s; display: inline-block;
+  }
+  .btn-outline:hover { border-color: var(--red); color: var(--red); transform: translateY(-3px); }
+  .hero-stats {
+    position: absolute; bottom: 3rem; left: 0; right: 0;
+    display: flex; justify-content: center; gap: 4rem;
+    animation: fadeUp 0.8s ease 0.8s both;
+  }
+  .stat { text-align: center; }
+  .stat-num {
+    font-family: var(--font-display); font-size: 2.5rem;
+    background: linear-gradient(135deg, var(--red), var(--orange));
+    -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+  }
+  .stat-label { color: var(--muted); font-size: 0.7rem; letter-spacing: 3px; text-transform: uppercase; }
+  .scroll-indicator {
+    position: absolute; bottom: 1.5rem; left: 50%; transform: translateX(-50%);
+    display: flex; flex-direction: column; align-items: center; gap: 0.5rem;
+    color: var(--muted); font-size: 0.65rem; letter-spacing: 3px;
+    animation: bounce 2s ease-in-out infinite;
+  }
+  .scroll-line { width: 1px; height: 50px; background: linear-gradient(var(--red), transparent); }
+  @keyframes bounce { 0%,100% { transform: translateX(-50%) translateY(0); } 50% { transform: translateX(-50%) translateY(8px); } }
+  @keyframes fadeUp { from { opacity: 0; transform: translateY(30px); } to { opacity: 1; transform: translateY(0); } }
+  @keyframes fadeDown { from { opacity: 0; transform: translateY(-20px); } to { opacity: 1; transform: translateY(0); } }
+
+  /* SECTIONS */
+  section { padding: 7rem 3rem; }
+  .section-label {
+    color: var(--red); font-size: 0.7rem; letter-spacing: 6px;
+    text-transform: uppercase; margin-bottom: 1rem; display: block;
+  }
+  .section-title {
+    font-family: var(--font-display); font-size: clamp(2.5rem, 5vw, 5rem);
+    line-height: 1; margin-bottom: 1.5rem;
+  }
+  .section-desc { color: var(--muted); font-family: var(--font-light); line-height: 1.8; max-width: 500px; }
+
+  /* SERVICES */
+  #services { background: var(--deep); }
+  .services-header { text-align: center; margin-bottom: 5rem; }
+  .services-header .section-desc { margin: 0 auto; }
+  .services-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 1.5px;
+    background: var(--border);
+  }
+  .service-card {
+    background: var(--black);
+    padding: 2.5rem 2rem;
+    position: relative; overflow: hidden;
+    transition: all 0.4s; cursor: default;
+  }
+  .service-card::before {
+    content: ''; position: absolute; inset: 0;
+    background: linear-gradient(135deg, rgba(232,0,28,0.06), transparent);
+    opacity: 0; transition: opacity 0.4s;
+  }
+  .service-card::after {
+    content: ''; position: absolute; bottom: 0; left: 0;
+    width: 0; height: 2px;
+    background: linear-gradient(90deg, var(--red), var(--orange));
+    transition: width 0.4s;
+  }
+  .service-card:hover::before { opacity: 1; }
+  .service-card:hover::after { width: 100%; }
+  .service-card:hover { background: #111; transform: translateY(-4px); }
+  .service-num {
+    font-family: var(--font-display); font-size: 3.5rem;
+    color: #1a1a1a; line-height: 1; margin-bottom: 1rem;
+    transition: color 0.4s;
+  }
+  .service-card:hover .service-num { color: rgba(232,0,28,0.2); }
+  .service-icon { font-size: 2rem; margin-bottom: 1rem; display: block; }
+  .service-name {
+    font-family: var(--font-display); font-size: 1.6rem;
+    letter-spacing: 1px; margin-bottom: 0.8rem;
+    color: var(--white);
+  }
+  .service-desc { color: var(--muted); font-family: var(--font-light); font-size: 0.9rem; line-height: 1.6; }
+  .service-tag {
+    margin-top: 1.2rem; display: inline-block;
+    background: rgba(232,0,28,0.1); color: var(--red);
+    padding: 0.3rem 0.8rem; font-size: 0.65rem;
+    letter-spacing: 2px; text-transform: uppercase;
+  }
+
+  /* WHY US */
+  #why {
+    display: grid; grid-template-columns: 1fr 1fr;
+    gap: 6rem; align-items: center; padding: 7rem 5rem;
+  }
+  .why-visual {
+    position: relative;
+  }
+  .why-big-text {
+    font-family: var(--font-display); font-size: 12rem;
+    color: #111; line-height: 1; user-select: none;
+    position: relative;
+  }
+  .why-big-text span {
+    position: absolute; top: 50%; left: 50%;
+    transform: translate(-50%, -50%);
+    background: linear-gradient(135deg, var(--red), var(--orange));
+    -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+    font-size: 5rem; white-space: nowrap;
+  }
+  .features-list { display: flex; flex-direction: column; gap: 2rem; margin-top: 3rem; }
+  .feature-item { display: flex; gap: 1.5rem; align-items: flex-start; }
+  .feature-icon {
+    min-width: 44px; height: 44px; background: rgba(232,0,28,0.1);
+    border: 1px solid rgba(232,0,28,0.2);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 1.2rem;
+  }
+  .feature-title { font-weight: 700; font-size: 1rem; margin-bottom: 0.3rem; letter-spacing: 1px; }
+  .feature-text { color: var(--muted); font-family: var(--font-light); font-size: 0.88rem; line-height: 1.6; }
+
+  /* LOCATION */
+  #location { background: var(--deep); }
+  .location-wrapper {
+    display: grid; grid-template-columns: 1fr 1.5fr; gap: 4rem; align-items: center;
+  }
+  .location-map {
+    width: 100%; height: 400px; border: 1px solid var(--border);
+    position: relative; overflow: hidden;
+  }
+  .location-map iframe { width: 100%; height: 100%; border: none; filter: grayscale(80%) invert(0.1); }
+  .location-info { display: flex; flex-direction: column; gap: 2rem; }
+  .info-item { display: flex; gap: 1.5rem; align-items: flex-start; }
+  .info-icon {
+    min-width: 44px; height: 44px;
+    background: linear-gradient(135deg, var(--red), var(--orange));
+    display: flex; align-items: center; justify-content: center;
+    font-size: 1.1rem;
+  }
+  .info-label { color: var(--muted); font-size: 0.7rem; letter-spacing: 3px; text-transform: uppercase; margin-bottom: 0.3rem; }
+  .info-value { font-size: 1rem; font-weight: 600; }
+  .info-value a { color: var(--red); text-decoration: none; }
+
+  /* BOOKING PAGE */
+  #booking { background: var(--black); }
+  .booking-container { max-width: 700px; margin: 0 auto; }
+  .booking-header { text-align: center; margin-bottom: 3rem; }
+
+  /* BOOKING STEPS */
+  .steps {
+    display: flex; align-items: center; justify-content: center;
+    gap: 0; margin-bottom: 3rem;
+  }
+  .step {
+    display: flex; flex-direction: column; align-items: center; gap: 0.5rem;
+  }
+  .step-circle {
+    width: 44px; height: 44px; border-radius: 50%;
+    background: var(--card); border: 1px solid var(--border);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 0.9rem; font-weight: 700; color: var(--muted);
+    transition: all 0.3s; position: relative;
+  }
+  .step.active .step-circle {
+    background: linear-gradient(135deg, var(--red), var(--orange));
+    border-color: transparent; color: #fff;
+    box-shadow: 0 0 20px rgba(232,0,28,0.4);
+  }
+  .step.done .step-circle { background: rgba(232,0,28,0.2); border-color: var(--red); color: var(--red); }
+  .step-label { font-size: 0.65rem; letter-spacing: 2px; color: var(--muted); text-transform: uppercase; }
+  .step.active .step-label { color: var(--red); }
+  .step-line { width: 80px; height: 1px; background: var(--border); margin-bottom: 20px; }
+  .step-line.done { background: var(--red); }
+
+  /* FORM */
+  .booking-form {
+    background: var(--card); border: 1px solid var(--border);
+    padding: 3rem; position: relative; overflow: hidden;
+  }
+  .booking-form::before {
+    content: ''; position: absolute; top: 0; left: 0; right: 0; height: 2px;
+    background: linear-gradient(90deg, var(--red), var(--orange));
+  }
+  .form-step { display: none; animation: fadeUp 0.5s ease both; }
+  .form-step.active { display: block; }
+
+  .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; margin-bottom: 1.5rem; }
+  .form-group { display: flex; flex-direction: column; gap: 0.6rem; margin-bottom: 1.5rem; }
+  .form-label {
+    font-size: 0.7rem; letter-spacing: 3px; text-transform: uppercase;
+    color: var(--muted); font-weight: 700;
+  }
+  .form-input, .form-select {
+    background: var(--black); border: 1px solid var(--border);
+    color: var(--white); padding: 0.85rem 1.2rem;
+    font-family: var(--font-body); font-size: 1rem;
+    transition: border-color 0.3s; outline: none; width: 100%;
+  }
+  .form-input:focus, .form-select:focus { border-color: var(--red); box-shadow: 0 0 0 1px rgba(232,0,28,0.2); }
+  .form-input::placeholder { color: #444; }
+  .form-select option { background: var(--black); }
+
+  /* OTP */
+  .otp-inputs { display: flex; gap: 1rem; justify-content: center; margin: 2rem 0; }
+  .otp-box {
+    width: 55px; height: 65px; text-align: center;
+    font-size: 1.5rem; font-weight: 700; font-family: var(--font-display);
+    background: var(--black); border: 2px solid var(--border); color: var(--white);
+    transition: all 0.3s; outline: none; letter-spacing: 2px;
+  }
+  .otp-box:focus { border-color: var(--red); box-shadow: 0 0 15px rgba(232,0,28,0.3); }
+  .otp-box.filled { border-color: var(--red); }
+
+  .otp-resend { text-align: center; color: var(--muted); font-size: 0.88rem; margin-bottom: 2rem; }
+  .otp-resend span { color: var(--red); cursor: pointer; text-decoration: underline; }
+  .otp-timer { color: var(--orange); font-weight: 700; }
+
+  .form-note { color: var(--muted); font-size: 0.82rem; font-family: var(--font-light); margin-bottom: 2rem; line-height: 1.6; }
+  .form-note span { color: var(--red); }
+
+  .btn-block {
+    width: 100%; background: linear-gradient(135deg, var(--red), var(--orange));
+    color: #fff; border: none; padding: 1.1rem;
+    font-family: var(--font-body); font-size: 0.9rem;
+    letter-spacing: 3px; text-transform: uppercase; font-weight: 700;
+    cursor: pointer; transition: all 0.3s; margin-top: 0.5rem;
+  }
+  .btn-block:hover { transform: translateY(-2px); box-shadow: 0 10px 30px rgba(232,0,28,0.4); }
+  .btn-block:disabled { opacity: 0.5; cursor: not-allowed; transform: none; }
+
+  /* SUCCESS */
+  .success-state { text-align: center; padding: 2rem; display: none; }
+  .success-icon {
+    width: 80px; height: 80px; border-radius: 50%;
+    background: linear-gradient(135deg, var(--red), var(--orange));
+    display: flex; align-items: center; justify-content: center;
+    font-size: 2.5rem; margin: 0 auto 2rem;
+    animation: popIn 0.6s cubic-bezier(0.34, 1.56, 0.64, 1);
+  }
+  @keyframes popIn { from { transform: scale(0); } to { transform: scale(1); } }
+  .success-title { font-family: var(--font-display); font-size: 3rem; margin-bottom: 1rem; }
+  .success-text { color: var(--muted); font-family: var(--font-light); line-height: 1.8; }
+  .booking-id {
+    margin: 2rem auto; background: var(--black);
+    border: 1px dashed var(--red); padding: 1.5rem;
+    text-align: center; max-width: 300px;
+  }
+  .booking-id-label { color: var(--muted); font-size: 0.7rem; letter-spacing: 3px; }
+  .booking-id-num {
+    font-family: var(--font-display); font-size: 2.5rem;
+    background: linear-gradient(135deg, var(--red), var(--orange));
+    -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+  }
+
+  /* TOAST */
+  .toast {
+    position: fixed; bottom: 2rem; right: 2rem; z-index: 9999;
+    background: var(--card); border: 1px solid var(--red);
+    color: var(--white); padding: 1rem 1.5rem; min-width: 280px;
+    border-left: 4px solid var(--red); font-family: var(--font-body);
+    transform: translateX(400px); transition: transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+    box-shadow: 0 10px 40px rgba(0,0,0,0.6);
+  }
+  .toast.show { transform: translateX(0); }
+  .toast-title { font-weight: 700; font-size: 1rem; margin-bottom: 0.3rem; }
+  .toast-msg { color: var(--muted); font-size: 0.85rem; }
+
+  /* FOOTER */
+  footer {
+    background: #050505; border-top: 1px solid #111;
+    padding: 4rem 3rem 2rem;
+  }
+  .footer-top {
+    display: grid; grid-template-columns: 2fr 1fr 1fr 1fr;
+    gap: 4rem; margin-bottom: 3rem;
+  }
+  .footer-logo {
+    font-family: var(--font-display); font-size: 2.5rem; letter-spacing: 4px;
+    background: linear-gradient(135deg, var(--red), var(--orange));
+    -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+    margin-bottom: 1rem;
+  }
+  .footer-about { color: var(--muted); font-family: var(--font-light); font-size: 0.88rem; line-height: 1.8; margin-bottom: 1.5rem; }
+  .social-links { display: flex; gap: 1rem; }
+  .social-btn {
+    width: 38px; height: 38px; border: 1px solid var(--border);
+    display: flex; align-items: center; justify-content: center;
+    color: var(--muted); text-decoration: none; font-size: 0.9rem;
+    transition: all 0.3s;
+  }
+  .social-btn:hover { border-color: var(--red); color: var(--red); background: rgba(232,0,28,0.1); }
+  .footer-col h4 { font-weight: 700; letter-spacing: 2px; text-transform: uppercase; font-size: 0.8rem; margin-bottom: 1.5rem; color: var(--red); }
+  .footer-links { list-style: none; display: flex; flex-direction: column; gap: 0.8rem; }
+  .footer-links a { color: var(--muted); text-decoration: none; font-size: 0.88rem; transition: color 0.3s; }
+  .footer-links a:hover { color: var(--white); }
+  .footer-bottom {
+    border-top: 1px solid var(--border); padding-top: 2rem;
+    display: flex; justify-content: space-between; align-items: center;
+    color: var(--muted); font-size: 0.8rem;
+  }
+
+  /* MOBILE NAV */
+  .mobile-nav {
+    display: none; position: fixed; inset: 0; background: rgba(8,8,8,0.98);
+    z-index: 999; flex-direction: column; align-items: center; justify-content: center;
+    gap: 2.5rem; backdrop-filter: blur(30px);
+  }
+  .mobile-nav.open { display: flex; }
+  .mobile-nav a {
+    font-family: var(--font-display); font-size: 2.5rem; letter-spacing: 4px;
+    color: var(--white); text-decoration: none; transition: color 0.3s;
+  }
+  .mobile-nav a:hover { color: var(--red); }
+  .close-btn {
+    position: absolute; top: 1.5rem; right: 2rem;
+    font-size: 2rem; cursor: pointer; color: var(--muted);
+  }
+
+  /* SCROLLBAR */
+  ::-webkit-scrollbar { width: 4px; }
+  ::-webkit-scrollbar-track { background: var(--black); }
+  ::-webkit-scrollbar-thumb { background: var(--red); }
+
+  @media (max-width: 900px) {
+    nav { padding: 0 1.5rem; }
+    .nav-links { display: none; }
+    .nav-cta { display: none; }
+    .hamburger { display: flex; }
+    section { padding: 5rem 1.5rem; }
+    #why { grid-template-columns: 1fr; gap: 3rem; padding: 5rem 1.5rem; }
+    .why-big-text { font-size: 7rem; }
+    .location-wrapper { grid-template-columns: 1fr; }
+    .footer-top { grid-template-columns: 1fr 1fr; gap: 2rem; }
+    .footer-bottom { flex-direction: column; gap: 1rem; text-align: center; }
+    .form-row { grid-template-columns: 1fr; }
+    .hero-stats { gap: 2rem; }
+    .booking-form { padding: 2rem 1.5rem; }
+    .steps { gap: 0; }
+    .step-line { width: 40px; }
+  }
+
+  @media (max-width: 480px) {
+    .hero-stats { display: none; }
+    .footer-top { grid-template-columns: 1fr; }
+    .otp-inputs { gap: 0.6rem; }
+    .otp-box { width: 45px; height: 55px; font-size: 1.2rem; }
+  }
+</style>
+</head>
+<body>
+
+<!-- CURSOR -->
+<div class="cursor" id="cursor"></div>
+<div class="cursor-ring" id="cursorRing"></div>
+
+<!-- TOAST -->
+<div class="toast" id="toast">
+  <div class="toast-title" id="toastTitle"></div>
+  <div class="toast-msg" id="toastMsg"></div>
+</div>
+
+<!-- MOBILE NAV -->
+<div class="mobile-nav" id="mobileNav">
+  <span class="close-btn" onclick="closeMobileNav()">✕</span>
+  <a href="#home" onclick="closeMobileNav()">Home</a>
+  <a href="#services" onclick="closeMobileNav()">Services</a>
+  <a href="#why" onclick="closeMobileNav()">Why Us</a>
+  <a href="#location" onclick="closeMobileNav()">Location</a>
+  <a href="#booking" onclick="closeMobileNav()">Book Now</a>
+</div>
+
+<!-- NAV -->
+<nav>
+  <div class="logo">KK<span> Car Modif</span></div>
+  <ul class="nav-links">
+    <li><a href="#home">Home</a></li>
+    <li><a href="#services">Services</a></li>
+    <li><a href="#why">Why Us</a></li>
+    <li><a href="#location">Location</a></li>
+    <li><a href="#booking">Book Now</a></li>
+  </ul>
+  <a href="#booking" class="nav-cta">Book Now</a>
+  <div class="hamburger" onclick="openMobileNav()">
+    <span></span><span></span><span></span>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section class="hero" id="home">
+  <div class="hero-bg"></div>
+  <div class="hero-grid"></div>
+  <div class="hero-content">
+    <div class="hero-tag">⚡ Premium Car Modification Garage</div>
+    <h1 class="hero-title">
+      <span class="kk">KK</span>
+      <span class="sub">CAR MODIF</span>
+    </h1>
+    <p class="hero-desc">Where ordinary cars become extraordinary machines. From PPF protection to full custom builds — we transform your ride into a statement.</p>
+    <div class="hero-btns">
+      <a href="#booking" class="btn-primary">Book an Appointment</a>
+      <a href="#services" class="btn-outline">Explore Services</a>
+    </div>
+  </div>
+  <div class="hero-stats">
+    <div class="stat"><div class="stat-num">500+</div><div class="stat-label">Cars Modified</div></div>
+    <div class="stat"><div class="stat-num">10+</div><div class="stat-label">Services</div></div>
+    <div class="stat"><div class="stat-num">5★</div><div class="stat-label">Rated Garage</div></div>
+    <div class="stat"><div class="stat-num">8+</div><div class="stat-label">Years Expert</div></div>
+  </div>
+  <div class="scroll-indicator">
+    <div class="scroll-line"></div>
+    SCROLL
+  </div>
+</section>
+
+<!-- SERVICES -->
+<section id="services">
+  <div class="services-header">
+    <span class="section-label">What We Do</span>
+    <h2 class="section-title">Our Services</h2>
+    <p class="section-desc">Premium modifications and protection packages for all car types — from daily drivers to supercars.</p>
+  </div>
+  <div class="services-grid">
+    <div class="service-card">
+      <div class="service-num">01</div>
+      <span class="service-icon">🛡️</span>
+      <div class="service-name">PPF</div>
+      <p class="service-desc">Paint Protection Film shields your vehicle's original paint from rock chips, scratches, and UV fading with near-invisible clarity.</p>
+      <span class="service-tag">Protection</span>
+    </div>
+    <div class="service-card">
+      <div class="service-num">02</div>
+      <span class="service-icon">✨</span>
+      <div class="service-name">Ceramic Coating</div>
+      <p class="service-desc">Nano-ceramic technology bonded to your paint for hydrophobic protection, intense gloss, and long-lasting shine up to 5 years.</p>
+      <span class="service-tag">Coating</span>
+    </div>
+    <div class="service-card">
+      <div class="service-num">03</div>
+      <span class="service-icon">🏎️</span>
+      <div class="service-name">Body Kit</div>
+      <p class="service-desc">Aggressive front lips, side skirts, rear diffusers, and spoilers — professionally fitted for maximum visual impact and aerodynamics.</p>
+      <span class="service-tag">Exterior</span>
+    </div>
+    <div class="service-card">
+      <div class="service-num">04</div>
+      <span class="service-icon">🚿</span>
+      <div class="service-name">Car Wash</div>
+      <p class="service-desc">Deep detailing, foam wash, interior vacuuming, and hand-dry finish. We treat every car like it's our own.</p>
+      <span class="service-tag">Detailing</span>
+    </div>
+    <div class="service-card">
+      <div class="service-num">05</div>
+      <span class="service-icon">💧</span>
+      <div class="service-name">Hydro Dipping</div>
+      <p class="service-desc">Water transfer printing for rims, dashboards, and trims. Unlimited patterns — carbon fiber, camo, skulls, custom designs.</p>
+      <span class="service-tag">Custom</span>
+    </div>
+    <div class="service-card">
+      <div class="service-num">06</div>
+      <span class="service-icon">🎨</span>
+      <div class="service-name">Wrapping</div>
+      <p class="service-desc">Full car wraps, partial wraps, chrome finishes, matte, satin — change your car's color without permanent paint changes.</p>
+      <span class="service-tag">Wrap</span>
+    </div>
+    <div class="service-card">
+      <div class="service-num">07</div>
+      <span class="service-icon">🔊</span>
+      <div class="service-name">Custom Audio Setup</div>
+      <p class="service-desc">Subwoofers, amplifiers, tweeters, DSP tuning, and soundproofing for an immersive in-car concert experience.</p>
+      <span class="service-tag">Audio</span>
+    </div>
+    <div class="service-card">
+      <div class="service-num">08</div>
+      <span class="service-icon">🪑</span>
+      <div class="service-name">Custom Interior</div>
+      <p class="service-desc">Leather seat wrapping, ambient lighting, dashboard reupholstery, custom floor mats, and interior trim modifications.</p>
+      <span class="service-tag">Interior</span>
+    </div>
+    <div class="service-card">
+      <div class="service-num">09</div>
+      <span class="service-icon">⚙️</span>
+      <div class="service-name">Wheel Balancing</div>
+      <p class="service-desc">Precision wheel balancing and alignment using advanced equipment for smooth rides, better fuel efficiency, and even tyre wear.</p>
+      <span class="service-tag">Mechanical</span>
+    </div>
+    <div class="service-card">
+      <div class="service-num">10</div>
+      <span class="service-icon">🛒</span>
+      <div class="service-name">Aftermarket Products</div>
+      <p class="service-desc">Wide range of aftermarket parts for all car models — performance upgrades, lighting, accessories, and more.</p>
+      <span class="service-tag">Products</span>
+    </div>
+  </div>
+</section>
+
+<!-- WHY US -->
+<section id="why">
+  <div class="why-visual">
+    <div class="why-big-text">KK<span>Why Choose Us</span></div>
+  </div>
+  <div class="why-right">
+    <span class="section-label">The KK Difference</span>
+    <h2 class="section-title">Built for Passion. Crafted for Perfection.</h2>
+    <p class="section-desc">We're not just a modification shop — we're enthusiasts who live and breathe cars every single day.</p>
+    <div class="features-list">
+      <div class="feature-item">
+        <div class="feature-icon">🏆</div>
+        <div>
+          <div class="feature-title">Certified Technicians</div>
+          <div class="feature-text">Our team holds industry certifications with years of hands-on experience in premium car modifications.</div>
+        </div>
+      </div>
+      <div class="feature-item">
+        <div class="feature-icon">🔬</div>
+        <div>
+          <div class="feature-title">Premium Quality Materials</div>
+          <div class="feature-text">We use only top-grade films, coatings, and parts — no compromise on quality, ever.</div>
+        </div>
+      </div>
+      <div class="feature-item">
+        <div class="feature-icon">⏱️</div>
+        <div>
+          <div class="feature-title">On-Time Delivery</div>
+          <div class="feature-text">We respect your time. Every job is completed within the promised timeline without shortcuts.</div>
+        </div>
+      </div>
+      <div class="feature-item">
+        <div class="feature-icon">🤝</div>
+        <div>
+          <div class="feature-title">Warranty Backed</div>
+          <div class="feature-text">All major services come with our quality guarantee. Your satisfaction is our commitment.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- LOCATION -->
+<section id="location">
+  <div class="location-wrapper">
+    <div>
+      <span class="section-label">Find Us</span>
+      <h2 class="section-title">Visit Our Garage</h2>
+      <p class="section-desc">We're easy to find and ready to welcome you. Stop by for a free consultation anytime.</p>
+      <div class="location-info" style="margin-top:2.5rem">
+        <div class="info-item">
+          <div class="info-icon">📍</div>
+          <div>
+            <div class="info-label">Address</div>
+            <div class="info-value"><a href="https://share.google/EyHLMD2XdRByqkGB1" target="_blank">View on Google Maps →</a></div>
+          </div>
+        </div>
+        <div class="info-item">
+          <div class="info-icon">📞</div>
+          <div>
+            <div class="info-label">Phone</div>
+            <div class="info-value"><a href="tel:+916305163695">+91 63051 63695</a></div>
+          </div>
+        </div>
+        <div class="info-item">
+          <div class="info-icon">🕐</div>
+          <div>
+            <div class="info-label">Working Hours</div>
+            <div class="info-value">Mon – Sat: 9:00 AM – 7:00 PM</div>
+          </div>
+        </div>
+        <div class="info-item">
+          <div class="info-icon">💬</div>
+          <div>
+            <div class="info-label">WhatsApp</div>
+            <div class="info-value"><a href="https://wa.me/916305163695" target="_blank">Chat with us on WhatsApp →</a></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="location-map">
+      <iframe
+        src="https://maps.google.com/maps?q=KK+Car+Modification&output=embed"
+        allowfullscreen loading="lazy">
+      </iframe>
+    </div>
+  </div>
+</section>
+
+<!-- BOOKING -->
+<section id="booking">
+  <div class="booking-container">
+    <div class="booking-header">
+      <span class="section-label">Schedule Your Visit</span>
+      <h2 class="section-title">Book an Appointment</h2>
+      <p class="section-desc" style="margin:0 auto">Fill in your details and get an OTP confirmation instantly on your mobile.</p>
+    </div>
+
+    <!-- STEPS -->
+    <div class="steps">
+      <div class="step active" id="step1-indicator">
+        <div class="step-circle">1</div>
+        <div class="step-label">Details</div>
+      </div>
+      <div class="step-line" id="line1"></div>
+      <div class="step" id="step2-indicator">
+        <div class="step-circle">2</div>
+        <div class="step-label">Service</div>
+      </div>
+      <div class="step-line" id="line2"></div>
+      <div class="step" id="step3-indicator">
+        <div class="step-circle">3</div>
+        <div class="step-label">OTP</div>
+      </div>
+      <div class="step-line" id="line3"></div>
+      <div class="step" id="step4-indicator">
+        <div class="step-circle">4</div>
+        <div class="step-label">Done</div>
+      </div>
+    </div>
+
+    <div class="booking-form">
+      <!-- STEP 1 -->
+      <div class="form-step active" id="formStep1">
+        <h3 style="font-family:var(--font-display);font-size:1.8rem;margin-bottom:0.4rem;">Your Details</h3>
+        <p class="form-note">Enter your basic information to proceed.</p>
+        <div class="form-row">
+          <div class="form-group">
+            <label class="form-label">Full Name *</label>
+            <input type="text" class="form-input" id="fullName" placeholder="e.g. Kiran Kumar">
+          </div>
+          <div class="form-group">
+            <label class="form-label">Mobile Number *</label>
+            <input type="tel" class="form-input" id="mobileNum" placeholder="10-digit number" maxlength="10">
+          </div>
+        </div>
+        <div class="form-row">
+          <div class="form-group">
+            <label class="form-label">Car Number *</label>
+            <input type="text" class="form-input" id="carNum" placeholder="e.g. TN 09 AB 1234" style="text-transform:uppercase">
+          </div>
+          <div class="form-group">
+            <label class="form-label">Car Model</label>
+            <input type="text" class="form-input" id="carModel" placeholder="e.g. Honda City, i20">
+          </div>
+        </div>
+        <button class="btn-block" onclick="goStep2()">Continue →</button>
+      </div>
+
+      <!-- STEP 2 -->
+      <div class="form-step" id="formStep2">
+        <h3 style="font-family:var(--font-display);font-size:1.8rem;margin-bottom:0.4rem;">Select Service & Date</h3>
+        <p class="form-note">Choose the service you need and pick a convenient date.</p>
+        <div class="form-group">
+          <label class="form-label">Service Required *</label>
+          <select class="form-select" id="serviceType">
+            <option value="">-- Select a Service --</option>
+            <option>PPF (Paint Protection Film)</option>
+            <option>Ceramic Coating</option>
+            <option>Body Kit Installation</option>
+            <option>Car Wash & Detailing</option>
+            <option>Hydro Dipping</option>
+            <option>Car Wrapping</option>
+            <option>Custom Audio Setup</option>
+            <option>Custom Interior</option>
+            <option>Wheel Balancing & Alignment</option>
+            <option>Aftermarket Products</option>
+            <option>Multiple Services</option>
+          </select>
+        </div>
+        <div class="form-row">
+          <div class="form-group">
+            <label class="form-label">Preferred Date *</label>
+            <input type="date" class="form-input" id="bookDate">
+          </div>
+          <div class="form-group">
+            <label class="form-label">Preferred Time *</label>
+            <select class="form-select" id="bookTime">
+              <option value="">-- Select Time --</option>
+              <option>9:00 AM</option>
+              <option>10:00 AM</option>
+              <option>11:00 AM</option>
+              <option>12:00 PM</option>
+              <option>2:00 PM</option>
+              <option>3:00 PM</option>
+              <option>4:00 PM</option>
+              <option>5:00 PM</option>
+            </select>
+          </div>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Additional Notes</label>
+          <input type="text" class="form-input" id="notes" placeholder="Any specific requirements...">
+        </div>
+        <div style="display:flex;gap:1rem">
+          <button class="btn-block" style="background:#222;max-width:120px" onclick="goStep(1)">← Back</button>
+          <button class="btn-block" onclick="sendOTP()">Send OTP →</button>
+        </div>
+      </div>
+
+      <!-- STEP 3 -->
+      <div class="form-step" id="formStep3">
+        <h3 style="font-family:var(--font-display);font-size:1.8rem;margin-bottom:0.4rem;">Verify OTP</h3>
+        <p class="form-note">A <span>6-digit OTP</span> has been generated for <span id="otpSentTo"></span>. In production this would be sent via SMS.</p>
+
+        <!-- DEMO OTP DISPLAY BOX -->
+        <div id="demoOtpBox" style="
+          background: linear-gradient(135deg, rgba(232,0,28,0.12), rgba(255,106,0,0.08));
+          border: 1px dashed var(--red);
+          border-radius: 0;
+          padding: 1.2rem 1.5rem;
+          margin-bottom: 1.8rem;
+          display: flex;
+          align-items: center;
+          justify-content: space-between;
+          flex-wrap: wrap;
+          gap: 1rem;
+        ">
+          <div>
+            <div style="color:var(--muted);font-size:0.65rem;letter-spacing:3px;text-transform:uppercase;margin-bottom:0.4rem;">🔐 Demo OTP — always use <span style="color:var(--orange)">222222</span></div>
+            <div id="demoOtpValue" style="font-family:var(--font-display);font-size:2.8rem;letter-spacing:10px;background:linear-gradient(135deg,var(--red),var(--orange));-webkit-background-clip:text;-webkit-text-fill-color:transparent;line-height:1;">------</div>
+          </div>
+          <button onclick="fillOTPAuto()" style="
+            background: linear-gradient(135deg,var(--red),var(--orange));
+            color:#fff; border:none; padding:0.7rem 1.5rem;
+            font-family:var(--font-body); font-size:0.8rem;
+            letter-spacing:2px; text-transform:uppercase; font-weight:700;
+            cursor:pointer; white-space:nowrap;
+            clip-path: polygon(8px 0,100% 0,calc(100% - 8px) 100%,0 100%);
+          ">Auto Fill ⚡</button>
+        </div>
+
+        <div class="otp-inputs">
+          <input type="tel" class="otp-box" maxlength="1" id="otp1" oninput="otpNext(this,'otp2')" onkeydown="otpBack(event,this,'')">
+          <input type="tel" class="otp-box" maxlength="1" id="otp2" oninput="otpNext(this,'otp3')" onkeydown="otpBack(event,this,'otp1')">
+          <input type="tel" class="otp-box" maxlength="1" id="otp3" oninput="otpNext(this,'otp4')" onkeydown="otpBack(event,this,'otp2')">
+          <input type="tel" class="otp-box" maxlength="1" id="otp4" oninput="otpNext(this,'otp5')" onkeydown="otpBack(event,this,'otp3')">
+          <input type="tel" class="otp-box" maxlength="1" id="otp5" oninput="otpNext(this,'otp6')" onkeydown="otpBack(event,this,'otp4')">
+          <input type="tel" class="otp-box" maxlength="1" id="otp6" oninput="otpAutoVerify(this)" onkeydown="otpBack(event,this,'otp5')">
+        </div>
+        <div class="otp-resend">
+          Didn't receive? <span id="resendLink" onclick="resendOTP()">Resend OTP</span>
+          <span class="otp-timer" id="otpTimerText"></span>
+        </div>
+        <div style="display:flex;gap:1rem">
+          <button class="btn-block" style="background:#222;max-width:120px" onclick="goStep(2)">← Back</button>
+          <button class="btn-block" id="verifyBtn" onclick="verifyOTP()">Confirm Booking ✓</button>
+        </div>
+      </div>
+
+      <!-- SUCCESS -->
+      <div class="success-state" id="successState">
+        <div class="success-icon">✓</div>
+        <div class="success-title">Booking Confirmed!</div>
+        <p class="success-text">Your appointment at <strong>KK Car Modif</strong> has been successfully booked. We'll send a reminder before your scheduled time.</p>
+        <div class="booking-id">
+          <div class="booking-id-label">BOOKING ID</div>
+          <div class="booking-id-num" id="bookingId">#KK00000</div>
+        </div>
+        <div id="bookingSummary" style="text-align:left;margin:1.5rem 0;background:var(--black);padding:1.5rem;border:1px solid var(--border)"></div>
+        <button class="btn-block" onclick="newBooking()">Make Another Booking</button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-top">
+    <div>
+      <div class="footer-logo">KK Car Modif</div>
+      <p class="footer-about">Premium car modification garage specializing in PPF, ceramic coatings, body kits, wraps, and full custom builds. Your car deserves the best.</p>
+      <div class="social-links">
+        <a class="social-btn" href="#" title="Instagram">📸</a>
+        <a class="social-btn" href="#" title="Facebook">📘</a>
+        <a class="social-btn" href="https://wa.me/916305163695" title="WhatsApp">💬</a>
+        <a class="social-btn" href="#" title="YouTube">▶️</a>
+      </div>
+    </div>
+    <div class="footer-col">
+      <h4>Services</h4>
+      <ul class="footer-links">
+        <li><a href="#services">PPF Coating</a></li>
+        <li><a href="#services">Ceramic Coating</a></li>
+        <li><a href="#services">Body Kit</a></li>
+        <li><a href="#services">Car Wrapping</a></li>
+        <li><a href="#services">Hydro Dipping</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h4>More</h4>
+      <ul class="footer-links">
+        <li><a href="#services">Audio Setup</a></li>
+        <li><a href="#services">Custom Interior</a></li>
+        <li><a href="#services">Wheel Balancing</a></li>
+        <li><a href="#services">Car Wash</a></li>
+        <li><a href="#services">Aftermarket Parts</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h4>Company</h4>
+      <ul class="footer-links">
+        <li><a href="#home">Home</a></li>
+        <li><a href="#why">Why Us</a></li>
+        <li><a href="#location">Location</a></li>
+        <li><a href="#booking">Book Now</a></li>
+        <li><a href="https://wa.me/916305163695">Contact</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <div>© 2025 KK Car Modif. All rights reserved.</div>
+    <div style="color:var(--muted)">Crafted with ❤️ for car enthusiasts</div>
+  </div>
+</footer>
+
+<script>
+  // CURSOR
+  const cursor = document.getElementById('cursor');
+  const ring = document.getElementById('cursorRing');
+  document.addEventListener('mousemove', e => {
+    cursor.style.left = e.clientX - 6 + 'px';
+    cursor.style.top = e.clientY - 6 + 'px';
+    ring.style.left = e.clientX - 18 + 'px';
+    ring.style.top = e.clientY - 18 + 'px';
+  });
+  document.querySelectorAll('a,button,input,select').forEach(el => {
+    el.addEventListener('mouseenter', () => { ring.style.transform = 'scale(2)'; ring.style.opacity = '0.3'; });
+    el.addEventListener('mouseleave', () => { ring.style.transform = 'scale(1)'; ring.style.opacity = '0.6'; });
+  });
+
+  // MOBILE NAV
+  function openMobileNav() { document.getElementById('mobileNav').classList.add('open'); }
+  function closeMobileNav() { document.getElementById('mobileNav').classList.remove('open'); }
+
+  // SET MIN DATE
+  const today = new Date().toISOString().split('T')[0];
+  document.getElementById('bookDate').min = today;
+
+  // TOAST
+  function showToast(title, msg, isError = false) {
+    const t = document.getElementById('toast');
+    document.getElementById('toastTitle').textContent = title;
+    document.getElementById('toastMsg').textContent = msg;
+    t.style.borderLeftColor = isError ? '#ff1a35' : '#00c853';
+    t.classList.add('show');
+    setTimeout(() => t.classList.remove('show'), 3500);
+  }
+
+  // STEP NAVIGATION
+  let currentStep = 1;
+  function goStep(n) {
+    document.getElementById(`formStep${currentStep}`).classList.remove('active');
+    document.getElementById(`step${currentStep}-indicator`).classList.remove('active');
+    document.getElementById(`step${currentStep}-indicator`).classList.add('done');
+    if (n < currentStep) {
+      document.getElementById(`step${currentStep}-indicator`).classList.remove('done');
+      document.getElementById(`step${n}-indicator`).classList.remove('done');
+    }
+    currentStep = n;
+    document.getElementById(`formStep${currentStep}`).classList.add('active');
+    document.getElementById(`step${currentStep}-indicator`).classList.add('active');
+    document.getElementById(`step${currentStep}-indicator`).classList.remove('done');
+    if (n > 1) { document.getElementById(`line${n-1}`).classList.add('done'); }
+    if (n <= 2) { document.getElementById(`line2`).classList.remove('done'); }
+    if (n <= 1) { document.getElementById(`line1`).classList.remove('done'); }
+  }
+
+  function goStep2() {
+    const name = document.getElementById('fullName').value.trim();
+    const mobile = document.getElementById('mobileNum').value.trim();
+    const car = document.getElementById('carNum').value.trim();
+    if (!name) return showToast('Missing', 'Please enter your full name', true);
+    if (!/^\d{10}$/.test(mobile)) return showToast('Invalid', 'Enter a valid 10-digit mobile number', true);
+    if (!car) return showToast('Missing', 'Please enter your car number', true);
+    goStep(2);
+  }
+
+  // DEMO OTP
+  let demoOTP = '';
+  let timerInterval;
+
+  function sendOTP() {
+    const service = document.getElementById('serviceType').value;
+    const date = document.getElementById('bookDate').value;
+    const time = document.getElementById('bookTime').value;
+    if (!service) return showToast('Select Service', 'Please choose a service', true);
+    if (!date) return showToast('Select Date', 'Please pick a date', true);
+    if (!time) return showToast('Select Time', 'Please choose a time slot', true);
+
+    demoOTP = '222222';
+    const mobile = document.getElementById('mobileNum').value;
+    document.getElementById('otpSentTo').textContent = '+91 ' + mobile.substring(0,5) + 'XXXXX';
+
+    goStep(3);
+
+    // Show OTP clearly in the demo box
+    document.getElementById('demoOtpValue').textContent = demoOTP;
+
+    // Reset OTP boxes
+    ['otp1','otp2','otp3','otp4','otp5','otp6'].forEach(id => {
+      const el = document.getElementById(id);
+      el.value = ''; el.classList.remove('filled');
+    });
+    document.getElementById('otp1').focus();
+    startTimer();
+  }
+
+  function fillOTPAuto() {
+    // Auto fill OTP boxes with the demo OTP
+    const digits = demoOTP.split('');
+    ['otp1','otp2','otp3','otp4','otp5','otp6'].forEach((id, i) => {
+      const el = document.getElementById(id);
+      el.value = digits[i] || '';
+      el.classList.add('filled');
+    });
+    showToast('Auto Filled ⚡', 'OTP filled! Click Confirm Booking to proceed.');
+  }
+
+  function otpAutoVerify(el) {
+    el.value = el.value.replace(/\D/g, '');
+    if (el.value) {
+      el.classList.add('filled');
+      // Auto verify after last digit filled
+      const entered = ['otp1','otp2','otp3','otp4','otp5','otp6'].map(id => document.getElementById(id).value).join('');
+      if (entered.length === 6) {
+        setTimeout(() => verifyOTP(), 300);
+      }
+    } else {
+      el.classList.remove('filled');
+    }
+  }
+
+  function startTimer() {
+    let secs = 30;
+    const resend = document.getElementById('resendLink');
+    const timerText = document.getElementById('otpTimerText');
+    resend.style.opacity = '0.4'; resend.style.pointerEvents = 'none';
+    clearInterval(timerInterval);
+    timerInterval = setInterval(() => {
+      timerText.textContent = ` (${secs}s)`;
+      secs--;
+      if (secs < 0) {
+        clearInterval(timerInterval);
+        timerText.textContent = '';
+        resend.style.opacity = '1'; resend.style.pointerEvents = 'auto';
+      }
+    }, 1000);
+  }
+
+  function resendOTP() {
+    demoOTP = '222222';
+    document.getElementById('demoOtpValue').textContent = demoOTP;
+    showToast('OTP Refreshed! 🔄', 'Use OTP: 222222 to verify.');
+    ['otp1','otp2','otp3','otp4','otp5','otp6'].forEach(id => {
+      const el = document.getElementById(id);
+      el.value = ''; el.classList.remove('filled');
+    });
+    document.getElementById('otp1').focus();
+    startTimer();
+  }
+
+  function otpNext(el, nextId) {
+    el.value = el.value.replace(/\D/g, '');
+    if (el.value) { el.classList.add('filled'); if (nextId) document.getElementById(nextId).focus(); }
+    else { el.classList.remove('filled'); }
+  }
+
+  function otpBack(e, el, prevId) {
+    if (e.key === 'Backspace' && !el.value && prevId) document.getElementById(prevId).focus();
+  }
+
+  function verifyOTP() {
+    const entered = ['otp1','otp2','otp3','otp4','otp5','otp6'].map(id => document.getElementById(id).value).join('');
+    if (entered.length < 6) return showToast('Incomplete', 'Please enter all 6 digits', true);
+    if (entered !== demoOTP) return showToast('Invalid OTP', 'The OTP you entered is incorrect. Try again.', true);
+
+    clearInterval(timerInterval);
+    // Show success
+    document.getElementById('formStep3').classList.remove('active');
+    document.getElementById('step3-indicator').classList.remove('active');
+    document.getElementById('step3-indicator').classList.add('done');
+    document.getElementById('step4-indicator').classList.add('active');
+    document.getElementById('line3').classList.add('done');
+
+    const bookId = '#KK' + Math.floor(10000 + Math.random() * 90000);
+    document.getElementById('bookingId').textContent = bookId;
+
+    const name = document.getElementById('fullName').value;
+    const mobile = document.getElementById('mobileNum').value;
+    const car = document.getElementById('carNum').value;
+    const model = document.getElementById('carModel').value;
+    const service = document.getElementById('serviceType').value;
+    const date = document.getElementById('bookDate').value;
+    const time = document.getElementById('bookTime').value;
+
+    document.getElementById('bookingSummary').innerHTML = `
+      <div style="display:grid;gap:0.8rem;font-family:var(--font-light);font-size:0.9rem">
+        <div style="display:flex;justify-content:space-between;border-bottom:1px solid #1a1a1a;padding-bottom:0.8rem"><span style="color:var(--muted)">Name</span><strong>${name}</strong></div>
+        <div style="display:flex;justify-content:space-between;border-bottom:1px solid #1a1a1a;padding-bottom:0.8rem"><span style="color:var(--muted)">Mobile</span><strong>+91 ${mobile}</strong></div>
+        <div style="display:flex;justify-content:space-between;border-bottom:1px solid #1a1a1a;padding-bottom:0.8rem"><span style="color:var(--muted)">Car Number</span><strong>${car.toUpperCase()}</strong></div>
+        ${model ? `<div style="display:flex;justify-content:space-between;border-bottom:1px solid #1a1a1a;padding-bottom:0.8rem"><span style="color:var(--muted)">Car Model</span><strong>${model}</strong></div>` : ''}
+        <div style="display:flex;justify-content:space-between;border-bottom:1px solid #1a1a1a;padding-bottom:0.8rem"><span style="color:var(--muted)">Service</span><strong style="color:var(--red)">${service}</strong></div>
+        <div style="display:flex;justify-content:space-between;border-bottom:1px solid #1a1a1a;padding-bottom:0.8rem"><span style="color:var(--muted)">Date</span><strong>${new Date(date).toLocaleDateString('en-IN',{weekday:'long',year:'numeric',month:'long',day:'numeric'})}</strong></div>
+        <div style="display:flex;justify-content:space-between"><span style="color:var(--muted)">Time</span><strong>${time}</strong></div>
+      </div>
+    `;
+
+    document.getElementById('successState').style.display = 'block';
+    showToast('🎉 Booking Confirmed!', `Your booking ${bookId} is confirmed`);
+  }
+
+  function newBooking() {
+    document.getElementById('successState').style.display = 'none';
+    ['fullName','mobileNum','carNum','carModel','notes'].forEach(id => document.getElementById(id).value = '');
+    document.getElementById('serviceType').value = '';
+    document.getElementById('bookDate').value = '';
+    document.getElementById('bookTime').value = '';
+    ['otp1','otp2','otp3','otp4','otp5','otp6'].forEach(id => {
+      const el = document.getElementById(id);
+      el.value = ''; el.classList.remove('filled');
+    });
+    // Reset steps
+    document.querySelectorAll('.step').forEach(s => { s.classList.remove('active','done'); });
+    document.querySelectorAll('.step-line').forEach(l => l.classList.remove('done'));
+    document.getElementById('step1-indicator').classList.add('active');
+    currentStep = 1;
+    document.getElementById('formStep1').classList.add('active');
+    document.getElementById('formStep2').classList.remove('active');
+    document.getElementById('formStep3').classList.remove('active');
+  }
+
+  // SCROLL ANIMATIONS
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(e => {
+      if (e.isIntersecting) { e.target.style.opacity = '1'; e.target.style.transform = 'translateY(0)'; }
+    });
+  }, { threshold: 0.1 });
+  document.querySelectorAll('.service-card, .feature-item, .info-item').forEach(el => {
+    el.style.opacity = '0'; el.style.transform = 'translateY(20px)';
+    el.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
+    observer.observe(el);
+  });
+
+  // COUNTER ANIMATION
+  function animateCounters() {
+    document.querySelectorAll('.stat-num').forEach(el => {
+      const text = el.textContent;
+      const num = parseInt(text);
+      if (isNaN(num)) return;
+      let current = 0;
+      const suffix = text.replace(num.toString(), '');
+      const step = Math.ceil(num / 40);
+      const timer = setInterval(() => {
+        current = Math.min(current + step, num);
+        el.textContent = current + suffix;
+        if (current >= num) clearInterval(timer);
+      }, 30);
+    });
+  }
+  setTimeout(animateCounters, 800);
+</script>
+</body>
+</html>
